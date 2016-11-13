@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ifl.dao.PersonDao">
+	<resultMap type="Person" id="personhobby">
+		<id column="pid" property="id" />
+		<result column="pname" property="name"/>
+		<result column="psex" property="sex"/>
+		<result column="page" property="age"/>
+		<result column="phobby" property="hobby"/>
+		<association property="hobby1" javaType="Hobby">
+			<id column="hid" property="id"/>
+			<result column="hname" property="hname"/>
+		</association>
+	</resultMap>
+	
+	<select id="getPersonHobbyMap" resultMap="personhobby" >
+			select p.id as pid,p.name as pname,p.sex as psex,p.age as page,p.hobby as phobby ,h.id as hid,h.hname as hname
+			from person p inner join  hobby h 
+			on p.hobby=h.id 
+	</select>
+	<select id="getPersonById" parameterType="int" resultType="Person">
+		select * from person where id=#{id}
+		
+	</select>
+</mapper>
